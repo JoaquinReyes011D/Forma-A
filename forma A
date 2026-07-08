@@ -48,3 +48,28 @@ def actualizar_precio(codigo, nuevo_precio):
         return False
     inventario[cod_upper][0] = nuevo_precio
     return True
+
+def val_codigo(c):
+    return c.strip() != ""
+def val_titulo(t):
+    return t.strip() != ""
+def val_plataforma(p):
+    return p.strip() != ""
+def val_genero(g):
+    return g.strip() != ""
+def val_clasificacion(c):
+    return c.strip().upper() in ['E', 'T', 'M']
+def val_multiplayer(m):
+    return m.strip().lower() in ['s', 'n']
+def val_editor(e):
+    return e.strip() != ""
+def val_precio(p):
+    try:
+        return int(p) > 0
+    except ValueError:
+        return False
+def val_stock(s):
+    try:
+        return int(s) >= 0
+    except ValueError:
+        return False
