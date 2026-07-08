@@ -92,3 +92,86 @@ def eliminar_juego(codigo):
     if cod_upper in inventario:
         del inventario[cod_upper]
     return True
+
+while True:
+    print("\n========== MENÚ PRINCIPAL ==========")
+    print("1. Stock por plataforma")
+    print("2. Búsqueda de juegos por rango de precio")
+    print("3. Actualizar precio de juego")
+    print("4. Agregar juego")
+    print("5. Eliminar juego")
+    print("6. Salir")
+    print("=====================================")
+    
+    opcion = input("Ingrese opción: ").strip()
+    
+    if opcion == '1':
+        plat = input("Ingrese plataforma a consultar: ")
+        stock_plataforma(plat)
+        
+    elif opcion == '2':
+        while True:
+            try:
+                p_min = int(input("Ingrese precio mínimo: "))
+                p_max = int(input("Ingrese precio máximo: "))
+                if p_min >= 0 and p_max >= 0 and p_min <= p_max:
+                    break
+                else:
+                    print("Valores inconsistentes. Reintente.")
+            except ValueError:
+                print("Debe ingresar valores enteros")
+        busqueda_precio(p_min, p_max)
+        
+    elif opcion == '3':
+        while True:
+            cod = input("Ingrese código del juego: ")
+            try:
+                n_precio = int(input("Ingrese nuevo precio: "))
+                if n_precio <= 0:
+                    print("El precio debe ser un entero positivo.")
+                    continue
+            except ValueError:
+                print("Debe ingresar un valor entero.")
+                continue
+                
+            if actualizar_precio(cod, n_precio):
+                print("Precio actualizado")
+            else:
+                print("El código no existe")
+                
+            resp = input("¿Desea actualizar otro precio (s/n)?: ").strip().lower()
+            if resp != 's':
+                break
+                
+    elif opcion == '4':
+        c = input("Ingrese código del juego: ")
+        t = input("Ingrese título: ")
+        p = input("Ingrese plataforma: ")
+        g = input("Ingrese género: ")
+        cl = input("Ingrese clasificación: ")
+        m = input("¿Es multiplayer? (s/n): ")
+        e = input("Ingrese editor: ")
+        pr = input("Ingrese precio: ")
+        st = input("Ingrese stock: ")
+        
+        if not (val_codigo(c) and val_titulo(t) and val_plataforma(p) and val_genero(g) and 
+                val_clasificacion(cl) and val_multiplayer(m) and val_editor(e) and val_precio(pr) and val_stock(st)):
+            print("Error: Uno o más datos no cumplen con las validaciones.")
+        else:
+            if agregar_juego(c, t, p, g, cl, m, e, pr, st):
+                print("Juego agregado")
+            else:
+                print("El código ya existe")
+                
+    elif opcion == '5':
+        cod = input("Ingrese código del juego a eliminar: ")
+        if eliminar_juego(cod):
+            print("Juego eliminado")
+        else:
+            print("El código no existe")
+            
+    elif opcion == '6':
+        print("Programa finalizado.")
+        break
+    else:
+        print("Debe seleccionar una opción válida")
