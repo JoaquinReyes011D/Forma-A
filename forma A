@@ -73,3 +73,22 @@ def val_stock(s):
         return int(s) >= 0
     except ValueError:
         return False
+
+def agregar_juego(codigo, titulo, plataforma, genero, clasificacion, multiplayer, editor, precio, stock):
+    cod_upper = codigo.strip().upper()
+    if cod_upper in juegos:
+        return False
+    
+    mp_bool = True if multiplayer.lower() == 's' else False
+    juegos[cod_upper] = [titulo, plataforma, genero, clasificacion.upper(), mp_bool, editor]
+    inventario[cod_upper] = [int(precio), int(stock)]
+    return True
+
+def eliminar_juego(codigo):
+    cod_upper = codigo.strip().upper()
+    if cod_upper not in juegos:
+        return False
+    del juegos[cod_upper]
+    if cod_upper in inventario:
+        del inventario[cod_upper]
+    return True
